@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Галерея 10-летия свадьбы</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Подключаем Hammer.js и Howler.js -->
+  <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/dist/hammer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="slider-wrapper">
+      <div class="slider">
+        <div class="slider__content">
+          <div class="slider__item">
+            <img src="img/test.jpg" alt="Фото 1">
+          </div>
+          <div class="slider__item">
+            <img src="img/test2.jpg" alt="Фото 2">
+          </div>
+          <!-- Добавьте дополнительные слайды по необходимости -->
+        </div>
+      </div>
+    </div>
+    <div class="controls-panel">
+      <button id="prevBtn" class="slider__button">◀</button>
+      <button id="audioBtn" class="slider__button audio__btn">🔊</button>
+      <button id="nextBtn" class="slider__button">▶</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
