@@ -1,226 +1,154 @@
-// ===========================
-// СЛАЙДЕР
-// ===========================
+const images = ['img/test.jpg', ...Array(9).fill(0).map((_, i) => `img/test${i + 2}.jpg`)];
 
-// Массив с данными для слайдов
-const slides = [
-  {
-    image: 'img/test.jpg',
-    text: 'Первый слайд\nТайна и красота.',
-    imageAnimation: 'dissolve 1.5s ease forwards',
-    textColor: '#333',            // Тёмный текст для контраста на светлом фоне
-    textAnimation: 'typing 5s steps(50, end)'
-  },
-  {
-    image: 'img/test2.jpg',
-    text: 'Второй слайд\nДорогие моменты.',
-    imageAnimation: 'dissolve 1.5s ease forwards',
-    textColor: '#333',
-    textAnimation: 'typing 5s steps(50, end)'
-  },
-  {
-    image: 'img/test3.jpg',
-    text: 'Третий слайд\nПолет в мечту.',
-    imageAnimation: 'zoomIn 1.5s ease forwards',
-    textColor: '#333',
-    textAnimation: 'typing 5s steps(50, end)'
-  },
-  {
-    image: 'img/test4.jpg',
-    text: 'Четвертый слайд\nВдохновение!',
-    imageAnimation: 'zoomIn 1.5s ease forwards',
-    textColor: '#333',
-    textAnimation: 'typing 5s steps(50, end)'
-  }
+const texts = [
+  "Слайд 1: Наше начало 💖",
+  "Слайд 2: Первое свидание 🥰",
+  "Слайд 3: Весёлые моменты 😄",
+  "Слайд 4: Первое путешествие ✈️",
+  "Слайд 5: Новый год вместе 🎄",
+  "Слайд 6: Сюрпризы и смех 🎁",
+  "Слайд 7: Сила любви ❤️",
+  "Слайд 8: Наша семья 🏡",
+  "Слайд 9: 10 лет вместе 🎉",
+  "Слайд 10: И это только начало... 💫"
 ];
 
-let currentSlide = 0; // Текущий индекс слайда
+let currentSlide = 0;
+let music1 = new Howl({ src: ['music/music.mp3'], volume: 0.5 });
+let music2 = new Howl({ src: ['music/quiz.mp3'], volume: 0.5 });
+let currentMusic = music1;
+let musicPlaying = false;
 
-// Глобальная переменная для интервала печати текста
-let textInterval = null;
+const slideImage = document.getElementById('slide-image');
+const slideText = document.getElementById('slide-text');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const musicBtn = document.getElementById('music-btn');
+const scrollBtn = document.getElementById('quiz-scroll-btn');
+const quizSection = document.getElementById('quiz-section');
 
-// Получаем DOM-элементы для слайдера
-const imageEl = document.getElementById('slide-image');
-const textEl = document.getElementById('slide-text');
-const prevBtn = document.getElementById('prev');
-const nextBtn = document.getElementById('next');
-const soundBtn = document.getElementById('sound');
-const music = document.getElementById('background-music'); // Основная музыка
-const quizMusic = document.getElementById('quiz-music');     // Музыка для викторины
-
-// Функция для показа слайда
-const showSlide = (index) => {
-  // Очищаем предыдущий интервал печати текста, если он есть
-  if (textInterval) {
-    clearInterval(textInterval);
-    textInterval = null;
-  }
-  
-  const slide = slides[index];
-  // Сброс состояния: изображение и текст
-  imageEl.style.opacity = 1;
-  imageEl.style.animation = 'none';
-  textEl.style.opacity = 0;
-  textEl.textContent = '';
-  textEl.className = 'slide-text';
-
-  setTimeout(() => {
-    imageEl.src = slide.image;
-    // Плавное появление изображения (fade-in)
-    imageEl.style.opacity = 0;
-    setTimeout(() => {
-      imageEl.style.opacity = 1;
-    }, 50);
-
-    // Ждем 2.5 секунды перед запуском растворения
-    setTimeout(() => {
-      // Запускаем анимацию растворения
-      imageEl.style.animation = slide.imageAnimation;
-      // Через 1 секунду после начала анимации делаем изображение полностью прозрачным (фоновый белый цвет контейнера виден)
-      setTimeout(() => {
-        imageEl.style.opacity = 0;
-        // Запускаем анимацию печати текста
-        typeText(slide.text, slide.textColor, slide.textAnimation);
-      }, 1000);
-    }, 2500);
-  }, 500);
-};
-
-// Функция для анимации печати текста
-const typeText = (text, color, animation) => {
-  textEl.style.color = color;       // Устанавливаем цвет текста
-  textEl.style.animation = animation; // Применяем анимацию (если используется для CSS-свойств)
-  let index = 0;
-  textEl.textContent = '';          // Очищаем текст
-  textEl.style.opacity = 1;         // Делаем текст видимым
-  textInterval = setInterval(() => {
-    // Проверяем, чтобы не выйти за пределы строки
-    if (index < text.length) {
-      textEl.textContent += text[index];
-      index++;
+function typeWriterEffect(text) {
+  slideText.innerHTML = '';
+  let i = 0;
+  const interval = setInterval(() => {
+    if (i < text.length) {
+      slideText.innerHTML += text[i++];
     } else {
-      clearInterval(textInterval);
-      textInterval = null;
+      clearInterval(interval);
     }
-  }, 80);
+  }, 50);
+}
+
+function showSlide(index) {
+  slideImage.src = images[index];
+  typeWriterEffect(texts[index]);
+}
+
+prevBtn.onclick = () => {
+  currentSlide = (currentSlide - 1 + images.length) % images.length;
+  showSlide(currentSlide);
 };
 
-// Обработчики для кнопок навигации слайдера
-prevBtn.addEventListener('click', () => {
-  currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+nextBtn.onclick = () => {
+  currentSlide = (currentSlide + 1) % images.length;
   showSlide(currentSlide);
-});
+};
 
-nextBtn.addEventListener('click', () => {
-  currentSlide = (currentSlide + 1) % slides.length;
-  showSlide(currentSlide);
-});
-
-// Обработчик для кнопки управления музыкой
-soundBtn.addEventListener('click', () => {
-  if (music.paused) {
-    music.play();
+musicBtn.onclick = () => {
+  if (!musicPlaying) {
+    currentMusic.play();
+    musicPlaying = true;
   } else {
-    music.pause();
+    currentMusic.pause();
+    musicPlaying = false;
   }
-});
+};
 
-// При загрузке страницы запускаем основную музыку через 2.5 секунды и показываем первый слайд
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    music.play();
-  }, 2500);
-  showSlide(currentSlide);
-});
+scrollBtn.onclick = () => {
+  currentMusic.stop();
+  currentMusic = music2;
+  currentMusic.play();
+  musicPlaying = true;
 
+  const section = document.getElementById('quiz-section');
+  if (section) {
+    // Сделать секцию видимой
+    section.style.display = 'block';
 
-// ===========================
+    // Подождать один кадр (чтобы браузер отрисовал)
+    requestAnimationFrame(() => {
+      section.scrollIntoView({ behavior: 'smooth' });
+    });
+  } else {
+    console.error("Секция викторины не найдена!");
+  }
+};
+
+showSlide(currentSlide);
+
 // ВИКТОРИНА
-// ===========================
-
-// Данные викторины
-const quizData = [
-  {
-    question: "Где мы встретились?",
-    options: ["В кафе", "На вечеринке", "В университете", "В парке"],
-    answer: "В университете"
-  },
-  {
-    question: "Какой наш первый совместный фильм?",
-    options: ["Титаник", "Матрица", "Интерстеллар", "Начало"],
-    answer: "Титаник"
-  },
-  {
-    question: "Какое блюдо мы готовили вместе в первый раз?",
-    options: ["Пицца", "Паста", "Суши", "Борщ"],
-    answer: "Паста"
-  }
+const quizQuestions = [
+  { q: "Как звали нашу первую кошку?", a: "Мурка" },
+  { q: "Где мы провели отпуск 2019?", a: "Сочи" },
+  { q: "Любимый фильм?", a: "Амели" },
+  { q: "Когда мы впервые поехали за границу?", a: "2017" },
+  { q: "Любимая еда?", a: "Суши" },
+  { q: "Какой цвет ты чаще носишь?", a: "Розовый" },
+  { q: "Куда мы поехали на годовщину 5 лет?", a: "Питер" },
+  { q: "Как зовут твою подругу?", a: "Аня" },
+  { q: "Любимая песня?", a: "Shallow" },
+  { q: "Сколько лет мы вместе?", a: "10" }
 ];
 
-let currentQuizIndex = 0; // Текущий индекс вопроса викторины
+let foodPoints = 0;
+const foodDisplay = document.getElementById('food-points');
+const catImage = document.getElementById('cat-image');
+const startBtn = document.getElementById('start-quiz');
+const modal = document.getElementById('quiz-modal');
+const closeModal = document.querySelector('.close');
+const quizContainer = document.getElementById('quiz-container');
 
-// Получаем DOM-элементы для викторины
-const quizModal = document.getElementById('quiz-modal');
-const quizQuestionEl = document.getElementById('quiz-question');
-const quizOptionsEl = document.getElementById('quiz-options');
-const quizFeedbackEl = document.getElementById('quiz-feedback');
-const quizNextBtn = document.getElementById('quiz-next');
-const quizCloseBtn = document.getElementById('quiz-close');
-const startQuizBtn = document.getElementById('start-quiz');
+startBtn.onclick = () => {
+  modal.style.display = 'block';
+  foodPoints = 0;
+  foodDisplay.textContent = `Корм: ${foodPoints}`;
+  catImage.src = 'images/cat-hungry.gif';
+  quizContainer.innerHTML = '';
 
-// Функция для показа текущего вопроса викторины
-const showQuizQuestion = () => {
-  const data = quizData[currentQuizIndex];
-  quizFeedbackEl.textContent = "";
-  quizNextBtn.classList.add('hidden');
-  quizQuestionEl.textContent = data.question;
-  quizOptionsEl.innerHTML = "";
-
-  // Создаем кнопки для вариантов ответа
-  data.options.forEach(option => {
-    const btn = document.createElement('button');
-    btn.textContent = option;
-    btn.classList.add('quiz-option');
-    btn.addEventListener('click', () => {
-      if (option === data.answer) {
-        quizFeedbackEl.textContent = "Правильно!";
-      } else {
-        quizFeedbackEl.textContent = "Неправильно!";
-      }
-      quizNextBtn.classList.remove('hidden');
-    });
-    quizOptionsEl.appendChild(btn);
+  quizQuestions.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <p>${idx + 1}. ${item.q}</p>
+      <input type="text" id="answer-${idx}" placeholder="Ваш ответ" />
+    `;
+    quizContainer.appendChild(div);
   });
+
+  const submit = document.createElement('button');
+  submit.textContent = "Отправить ответы";
+  submit.onclick = () => {
+    foodPoints = 0;
+    quizQuestions.forEach((item, idx) => {
+      const answer = document.getElementById(`answer-${idx}`).value.trim().toLowerCase();
+      if (answer === item.a.toLowerCase()) foodPoints += 10;
+    });
+    foodDisplay.textContent = `Корм: ${foodPoints}`;
+    catImage.src = foodPoints >= 80 ? 'images/cat-happy.gif' :
+                   foodPoints >= 40 ? 'images/cat-medium.gif' :
+                                      'images/cat-hungry.gif';
+    modal.style.display = 'none';
+  };
+  quizContainer.appendChild(submit);
 };
 
-// Обработчик для кнопки "Начать викторину"
-startQuizBtn.addEventListener('click', () => {
-  currentQuizIndex = 0;
-  quizModal.classList.remove('hidden');
-  // Переключаем музыку: останавливаем основную и запускаем музыку викторины
-  music.pause();
-  music.currentTime = 0;
-  quizMusic.currentTime = 0;
-  quizMusic.play();
-  showQuizQuestion();
-});
+closeModal.onclick = () => {
+  modal.style.display = 'none';
+};
 
-// Обработчик для кнопки "Следующий вопрос"
-quizNextBtn.addEventListener('click', () => {
-  currentQuizIndex++;
-  if (currentQuizIndex < quizData.length) {
-    showQuizQuestion();
-  } else {
-    quizFeedbackEl.textContent = "Поздравляем! Вы завершили викторину!";
-    quizNextBtn.classList.add('hidden');
+window.onclick = e => {
+  if (e.target === modal) {
+    modal.style.display = 'none';
   }
-});
+};
 
-// Обработчик для кнопки "Закрыть викторину"
-quizCloseBtn.addEventListener('click', () => {
-  quizModal.classList.add('hidden');
-  // Возвращаем основную музыку
-  quizMusic.pause();
-  quizMusic.currentTime = 0;
-  music.play();
-});
+showSlide(currentSlide);

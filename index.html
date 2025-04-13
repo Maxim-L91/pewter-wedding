@@ -3,30 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Юбилейный Слайдер</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>10 лет вместе 💖</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <!-- Контейнер слайдера -->
-  <div class="slider" id="slider">
-    <!-- Изображение слайда -->
-    <img id="slide-image" class="slide-image" src="images/slide1.jpg" alt="Слайд" />
-
-    <!-- Текст, который появляется за фото -->
-    <div id="slide-text" class="slide-text"></div>
-
-    <!-- Кнопки управления -->
+  <div class="slider-container">
+    <div class="slider">
+      <img id="slide-image" src="img/test.jpg" alt="Слайд 1"/>
+      <div id="slide-text" class="slide-text"></div>
+    </div>
+  
     <div class="controls">
-      <button id="prev">&#9664;</button>
-      <button id="sound" class="music-button">♫</button>
-      <button id="next">&#9654;</button>
+      <button id="prev-btn">⟵</button>
+      <button id="next-btn">⟶</button>
+      <button id="music-btn">🔈</button>
+    </div>
+  
+    <div class="scroll-to-quiz">
+      <button id="quiz-scroll-btn">🐾 Перейти к викторине</button>
+    </div>
+  </div>
+  
+
+  <!-- Котик и викторина -->
+  <section id="quiz-section">
+    <div class="cat-container">
+      <img id="cat-image" src="images/cat-hungry.gif" alt="Голодный котик"/>
+      <div id="food-points">Корм: 0</div>
+      <button id="start-quiz">Начать викторину</button>
+    </div>
+  </section>
+
+  <!-- Модалка -->
+  <div id="quiz-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="quiz-container"></div>
     </div>
   </div>
 
-  <!-- Аудио -->
-  <audio id="background-music" src="music/music.mp3" loop></audio>
-
-  <!-- Скрипт -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
