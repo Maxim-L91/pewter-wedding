@@ -1,0 +1,127 @@
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #ffc0cb, #ffe6f0);
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  overflow-x: hidden;
+  color: #fff;
+}
+
+.slider-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.slider {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  aspect-ratio: 16 / 9;
+  background-color: #ffffff20;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(255, 192, 203, 0.7);
+  padding: 20px;
+}
+
+.slide-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 1;
+}
+
+.slide-text {
+  position: relative;
+  z-index: 2;
+  font-size: 1.8rem;
+  text-align: center;
+  white-space: pre-wrap;
+  color: #fff;
+  padding: 20px;
+  opacity: 0;
+}
+
+.controls {
+  margin-top: 30px;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  background: #ffe6f0;
+  border-radius: 30px;
+  padding: 10px 20px;
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1.4rem;
+  background: #ff69b4;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+.sound-btn::before {
+  content: '🎵';
+  font-size: 1.5rem;
+  display: inline-block;
+  animation: none;
+}
+
+.sound-btn.playing::before {
+  animation: pulse 1s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+@keyframes floatDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-200px) rotate(-10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+.typing-text {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid #fff;
+  animation: typing 4s steps(40, end), blink 0.7s step-end infinite;
+}
+
+@media (max-width: 768px) {
+  .slide-text {
+    font-size: 1.2rem;
+  }
+}
