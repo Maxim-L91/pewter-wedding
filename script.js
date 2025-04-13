@@ -8,33 +8,36 @@ const slides = [
     image: 'img/test.jpg',
     text: 'Первый слайд\nТайна и красота.',
     imageAnimation: 'dissolve 1.5s ease forwards',
-    textColor: '#fff',
+    textColor: '#333',            // Тёмный текст для контраста на светлом фоне
     textAnimation: 'typing 5s steps(50, end)'
   },
   {
     image: 'img/test2.jpg',
     text: 'Второй слайд\nДорогие моменты.',
     imageAnimation: 'dissolve 1.5s ease forwards',
-    textColor: '#ff0',
+    textColor: '#333',
     textAnimation: 'typing 5s steps(50, end)'
   },
   {
     image: 'img/test3.jpg',
     text: 'Третий слайд\nПолет в мечту.',
     imageAnimation: 'zoomIn 1.5s ease forwards',
-    textColor: '#f0f',
+    textColor: '#333',
     textAnimation: 'typing 5s steps(50, end)'
   },
   {
     image: 'img/test4.jpg',
     text: 'Четвертый слайд\nВдохновение!',
     imageAnimation: 'zoomIn 1.5s ease forwards',
-    textColor: '#ff6600',
+    textColor: '#333',
     textAnimation: 'typing 5s steps(50, end)'
   }
 ];
 
 let currentSlide = 0; // Текущий индекс слайда
+
+// Глобальная переменная для интервала печати текста
+let textInterval = null;
 
 // Получаем DOM-элементы для слайдера
 const imageEl = document.getElementById('slide-image');
@@ -47,12 +50,18 @@ const quizMusic = document.getElementById('quiz-music');     // Музыка д�
 
 // Функция для показа слайда
 const showSlide = (index) => {
+  // Очищаем предыдущий интервал печати текста, если он есть
+  if (textInterval) {
+    clearInterval(textInterval);
+    textInterval = null;
+  }
+  
   const slide = slides[index];
-  // Сброс текущего состояния
-  imageEl.style.opacity = 0;
+  // Сброс состояния: изображение и текст
+  imageEl.style.opacity = 1;
   imageEl.style.animation = 'none';
   textEl.style.opacity = 0;
-  textEl.innerHTML = '';
+  textEl.textContent = '';
   textEl.className = 'slide-text';
 
   setTimeout(() => {
@@ -63,28 +72,35 @@ const showSlide = (index) => {
       imageEl.style.opacity = 1;
     }, 50);
 
-    // Через 5 секунд запускаем анимацию растворения и отображаем текст
+    // Ждем 2.5 секунды перед запуском растворения
     setTimeout(() => {
+      // Запускаем анимацию растворения
       imageEl.style.animation = slide.imageAnimation;
+      // Через 1 секунду после начала анимации делаем изображение полностью прозрачным (фоновый белый цвет контейнера виден)
       setTimeout(() => {
-        imageEl.style.opacity = 0.2;
+        imageEl.style.opacity = 0;
+        // Запускаем анимацию печати текста
         typeText(slide.text, slide.textColor, slide.textAnimation);
-      }, 1500);
-    }, 5000);
+      }, 1000);
+    }, 2500);
   }, 500);
 };
 
 // Функция для анимации печати текста
 const typeText = (text, color, animation) => {
-  textEl.style.color = color;
-  textEl.style.animation = animation;
+  textEl.style.color = color;       // Устанавливаем цвет текста
+  textEl.style.animation = animation; // Применяем анимацию (если используется для CSS-свойств)
   let index = 0;
-  const interval = setInterval(() => {
-    textEl.textContent += text[index];
-    textEl.style.opacity = 1;
-    index++;
-    if (index >= text.length) {
-      clearInterval(interval);
+  textEl.textContent = '';          // Очищаем текст
+  textEl.style.opacity = 1;         // Делаем текст видимым
+  textInterval = setInterval(() => {
+    // Проверяем, чтобы не выйти за пределы строки
+    if (index < text.length) {
+      textEl.textContent += text[index];
+      index++;
+    } else {
+      clearInterval(textInterval);
+      textInterval = null;
     }
   }, 80);
 };
@@ -109,11 +125,11 @@ soundBtn.addEventListener('click', () => {
   }
 });
 
-// При загрузке страницы запускаем основную музыку и показываем первый слайд
+// При загрузке страницы запускаем основную музыку через 2.5 секунды и показываем первый слайд
 window.addEventListener('load', () => {
   setTimeout(() => {
     music.play();
-  }, 5000);
+  }, 2500);
   showSlide(currentSlide);
 });
 

@@ -1,81 +1,114 @@
 /* Общие стили для страницы */
 body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #ffc0cb, #ffe6f0);
-  color: #333;
   margin: 0;
   padding: 0;
-}
-
-/* Слайдер контейнер с фоном, скруглёнными углами и тенью */
-.slider-container {
-  position: relative;
-  width: 80%;
-  max-width: 800px;
-  margin: 40px auto;
-  background: #ffffff20;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(255,192,203,0.7);
-}
-
-/* Стили для изображения слайдера */
-.slide-image {
-  width: 100%;
-  display: block;
-  opacity: 0;
-  transition: opacity 1.5s ease;
-}
-
-/* Стили для текста, расположенного под изображением */
-.slide-text {
-  font-size: 2rem;
-  color: #fff;
-  text-align: center;
-  padding: 10px;   /* Отступы вокруг текста */
-  margin: 10px 0;  /* Отступ сверху и снизу */
-  opacity: 0;
-}
-
-/* Контейнер навигационных кнопок (стрелки и кнопка музыки) */
-.nav-container {
+  background: linear-gradient(135deg, #ffccff, #ffe6f0);
+  font-family: 'Segoe UI', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
-  margin: 20px auto;
+  height: 100vh;
 }
 
-/* Стили для стрелок (навигационных кнопок) */
-.nav-btn {
-  padding: 10px 20px;
-  background: #ff69b4;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  font-size: 1rem;
+/* Контейнер слайдера */
+.slider {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  aspect-ratio: 4 / 3;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+  background-color: #ffffff;  /* Белый фон для плавного растворения */
+  padding-bottom: 80px; /* место для кнопок */
 }
 
-/* Стили для кнопки управления музыкой */
-.sound-btn {
-  padding: 10px;
-  background: rgba(255,105,180,0.8);
+/* Слайд изображение */
+.slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  animation: pulse 5s ease-in-out infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 2s ease-in-out;
+}
+
+/* Текст на слайде: карточка, выровненная по центру */
+.slide-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #333;  /* Тёмный текст для контраста */
+  font-size: 1.6rem;
+  text-align: center;
+  padding: 20px 30px;
+  border-radius: 12px;
+  background-color: #f8f8f8; /* Мягкий светлый фон */
+  opacity: 0;
+  z-index: 2;
+  transition: opacity 1s ease;
+  white-space: pre-wrap;
+  line-height: 1.5;
+  overflow-wrap: break-word; /* Перенос длинных слов */
+  word-wrap: break-word;
+}
+
+/* Контейнер управления (стрелки и кнопка музыки) */
+.controls {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  z-index: 3;
+}
+
+/* Кнопки управления (стрелки и музыка) */
+.controls button {
+  background-color: #ff69b4;
   border: none;
+  color: white;
+  font-size: 1.5rem;
+  padding: 12px 18px;
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  font-size: 2rem;
-  color: #fff;
   cursor: pointer;
-  /* Анимация пульсации */
-  animation: pulse 1.5s infinite ease-in-out;
+  transition: transform 0.2s ease, background-color 0.3s;
 }
 
-/* Анимация пульсации для кнопки музыки */
+.controls button:hover {
+  background-color: #ff1493;
+  transform: scale(1.1);
+}
+
+/* Кнопка музыки с пульсацией */
+.music-button {
+  animation: pulse-button 2s infinite;
+}
+
+@keyframes pulse-button {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(255, 105, 180, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 105, 180, 0);
+  }
+}
+
+/* Анимация пульсации изображения */
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
 }
 
 /* Стили для модального окна викторины */
@@ -92,7 +125,7 @@ body {
   z-index: 10;
 }
 
-/* Скрытый элемент */
+/* Класс для скрытых элементов */
 .hidden {
   display: none;
 }
