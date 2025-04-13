@@ -142,3 +142,86 @@ html {
   from { width: 0 }
   to { width: 100% }
 }
+
+/* ====== 📱 АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ ====== */
+@media (max-width: 768px) {
+  .slider img {
+    max-height: 60vh;
+  }
+
+  .slide-text {
+    font-size: 1.2rem;
+    padding: 0 10px;
+  }
+
+  .controls {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  button {
+    padding: 8px 16px;
+    font-size: 1rem;
+  }
+
+  #quiz-scroll-btn {
+    width: 80%;
+    font-size: 1rem;
+    padding: 10px 15px;
+  }
+
+  .scroll-to-quiz {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+  }
+
+  #quiz-section {
+    padding: 20px 10px;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 15px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  #cat-image {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .slide-text {
+    font-size: 1rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
+
+  #quiz-scroll-btn {
+    font-size: 0.95rem;
+    padding: 8px 10px;
+  }
+
+  .controls {
+    gap: 6px;
+  }
+
+  .modal-content {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+}
