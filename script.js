@@ -1,5 +1,4 @@
-const images = ['img/test.jpg', ...Array(9).fill(0).map((_, i) => `img/test${i + 2}.jpg`)];
-
+const images = [...Array(10).keys()].map(i => `img/test${i + 1}.jpg`);
 const texts = [
   "Слайд 1: Наше начало 💖",
   "Слайд 2: Первое свидание 🥰",
@@ -29,20 +28,29 @@ const quizSection = document.getElementById('quiz-section');
 
 function typeWriterEffect(text) {
   slideText.innerHTML = '';
+  slideText.style.opacity = 0;
   let i = 0;
   const interval = setInterval(() => {
+    if (i === 0) slideText.style.opacity = 1;
     if (i < text.length) {
       slideText.innerHTML += text[i++];
     } else {
       clearInterval(interval);
     }
-  }, 50);
+  }, 40);
 }
 
 function showSlide(index) {
   slideImage.src = images[index];
+  slideImage.classList.remove('pulse');
+  void slideImage.offsetWidth;
+  slideImage.classList.add('pulse');
   typeWriterEffect(texts[index]);
 }
+
+slideImage.addEventListener('click', () => {
+  slideText.style.display = slideText.style.display === 'block' ? 'none' : 'block';
+});
 
 prevBtn.onclick = () => {
   currentSlide = (currentSlide - 1 + images.length) % images.length;
@@ -69,24 +77,10 @@ scrollBtn.onclick = () => {
   currentMusic = music2;
   currentMusic.play();
   musicPlaying = true;
-
-  const section = document.getElementById('quiz-section');
-  if (section) {
-    // Сделать секцию видимой
-    section.style.display = 'block';
-
-    // Подождать один кадр (чтобы браузер отрисовал)
-    requestAnimationFrame(() => {
-      section.scrollIntoView({ behavior: 'smooth' });
-    });
-  } else {
-    console.error("Секция викторины не найдена!");
-  }
+  quizSection.scrollIntoView({ behavior: 'smooth' });
 };
 
-showSlide(currentSlide);
-
-// ВИКТОРИНА
+// Викторина
 const quizQuestions = [
   { q: "Как звали нашу первую кошку?", a: "Мурка" },
   { q: "Где мы провели отпуск 2019?", a: "Сочи" },
@@ -109,7 +103,7 @@ const closeModal = document.querySelector('.close');
 const quizContainer = document.getElementById('quiz-container');
 
 startBtn.onclick = () => {
-  modal.style.display = 'block';
+  modal.style.display = 'flex';
   foodPoints = 0;
   foodDisplay.textContent = `Корм: ${foodPoints}`;
   catImage.src = 'images/cat-hungry.gif';
@@ -141,14 +135,7 @@ startBtn.onclick = () => {
   quizContainer.appendChild(submit);
 };
 
-closeModal.onclick = () => {
-  modal.style.display = 'none';
-};
-
-window.onclick = e => {
-  if (e.target === modal) {
-    modal.style.display = 'none';
-  }
-};
+closeModal.onclick = () => modal.style.display = 'none';
+window.onclick = e => { if (e.target === modal) modal.style.display = 'none'; };
 
 showSlide(currentSlide);

@@ -1,227 +1,180 @@
-/* Основные стили */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   scroll-behavior: smooth;
+  background: linear-gradient(to bottom right, #ffe6f0, #ffccf9);
   overflow-x: hidden;
 }
 
 .slider-container {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to bottom right, #ffccf9, #ffe6f0);
   text-align: center;
   padding-bottom: 40px;
 }
 
 .slider img {
-  max-width: 100%;
-  max-height: 80vh;
-  transition: opacity 1s ease-in-out;
+  width: 90%;
+  max-width: 600px;
+  max-height: 70vh;
+  border-radius: 20px;
+  animation: fadeIn 1s ease-in-out, pulse 5s infinite;
+  box-shadow: 0 10px 20px rgba(255, 105, 180, 0.3);
+  cursor: pointer;
 }
 
 .slide-text {
-  font-size: 1.5rem;
-  color: #333;
   margin-top: 20px;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  font-size: 1.2rem;
+  color: #333;
+  max-width: 90%;
   opacity: 0;
-  transition: opacity 2s ease-in-out;
+  animation: fadeInText 2s ease forwards;
+  white-space: pre-wrap;
+  line-height: 1.5;
 }
 
 .controls {
-  margin-top: 10px;
+  margin-top: 15px;
   display: flex;
   gap: 10px;
-}
-
-.scroll-to-quiz {
-  margin-top: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 button {
-  background-color: #ff69b4; /* Розовая кнопка */
+  background-color: #ff69b4;
   color: white;
   border: none;
-  padding: 10px 20px;
-  margin: 5px;
-  cursor: pointer;
+  padding: 12px 24px;
   font-size: 1rem;
-  border-radius: 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
   background-color: #ff1493;
+  transform: scale(1.05);
 }
 
 #quiz-scroll-btn {
-  font-size: 1.2rem;
-  padding: 10px 25px;
   background-color: #ff99cc;
-  border: none;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 #quiz-scroll-btn:hover {
   background-color: #ff66b2;
 }
 
+.scroll-to-quiz {
+  margin-top: 30px;
+}
+
 #quiz-section {
-  padding: 50px;
+  padding: 50px 20px;
   background-color: #ffebf1;
-  display: none;
+  text-align: center;
 }
 
 .cat-container {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #cat-image {
   max-width: 200px;
+  margin-bottom: 20px;
+  animation: fadeIn 2s ease;
 }
 
 #food-points {
-  margin-top: 10px;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
 }
 
 .modal {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  z-index: 9999;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
   justify-content: center;
   align-items: center;
 }
 
 .modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
+  background-color: #fff0f5;
+  padding: 30px;
+  border-radius: 15px;
   max-width: 600px;
-  margin: auto;
+  width: 90%;
+  position: relative;
 }
 
 .close {
   font-size: 2rem;
-  cursor: pointer;
-  color: red;
+  color: #ff1493;
   position: absolute;
   top: 10px;
-  right: 10px;
+  right: 15px;
+  cursor: pointer;
 }
 
-/* Для плавной прокрутки */
-html {
-  scroll-behavior: smooth;
+input[type="text"] {
+  padding: 10px;
+  width: 80%;
+  margin: 10px 0;
+  border: 2px solid #ffb6c1;
+  border-radius: 8px;
 }
 
-
-/* Анимации */
 @keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInText {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
 @keyframes pulse {
   0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+  50% { transform: scale(1.03); }
   100% { transform: scale(1); }
 }
 
-@keyframes typewriter {
-  from { width: 0 }
-  to { width: 100% }
-}
-
-/* ====== 📱 АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ ====== */
+/* Адаптивность */
 @media (max-width: 768px) {
-  .slider img {
-    max-height: 60vh;
-  }
-
   .slide-text {
-    font-size: 1.2rem;
-    padding: 0 10px;
-  }
-
-  .controls {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 10px;
+    font-size: 1rem;
+    padding: 10px;
   }
 
   button {
-    padding: 8px 16px;
-    font-size: 1rem;
-  }
-
-  #quiz-scroll-btn {
-    width: 80%;
-    font-size: 1rem;
-    padding: 10px 15px;
-  }
-
-  .scroll-to-quiz {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 15px;
-  }
-
-  #quiz-section {
-    padding: 20px 10px;
-  }
-
-  .modal-content {
-    width: 90%;
-    padding: 15px;
-  }
-
-  input[type="text"] {
-    width: 100%;
-    padding: 8px;
-    font-size: 1rem;
-    margin-bottom: 10px;
+    padding: 10px 18px;
+    font-size: 0.9rem;
   }
 
   #cat-image {
     max-width: 150px;
   }
-}
-
-@media (max-width: 480px) {
-  .slide-text {
-    font-size: 1rem;
-  }
-
-  button {
-    font-size: 0.9rem;
-    padding: 6px 12px;
-  }
-
-  #quiz-scroll-btn {
-    font-size: 0.95rem;
-    padding: 8px 10px;
-  }
-
-  .controls {
-    gap: 6px;
-  }
 
   .modal-content {
-    padding: 10px;
-    font-size: 0.95rem;
+    padding: 20px;
+  }
+
+  input[type="text"] {
+    width: 100%;
   }
 }
