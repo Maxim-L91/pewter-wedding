@@ -3,25 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Розовый Слайдер</title>
+  <title>Оловянная свадьба</title>
+  <!-- Подключение CSS файла -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Слайдер: изображение и текст -->
   <div class="slider-container">
-    <div class="slider" id="slider">
-      <img id="slide-image" class="slide-image" src="img/test.jpg" alt="Slide Image" />
-      <div id="slide-text" class="slide-text"></div>
-    </div>
-    <div class="controls">
-      <button id="prev">←</button>
-      <button id="sound" class="sound-btn playing"></button>
-      <button id="next">→</button>
+    <!-- Изображение слайдера -->
+    <img id="slide-image" class="slide-image" src="img/test.jpg" alt="Фотография">
+    <!-- Текст, который появляется под изображением -->
+    <div id="slide-text" class="slide-text"></div>
+  </div>
+
+  <!-- Контейнер навигационных кнопок (стрелки и кнопка музыки) -->
+  <div class="nav-container">
+    <button id="prev" class="nav-btn">Назад</button>
+    <button id="sound" class="sound-btn">🎵</button>
+    <button id="next" class="nav-btn">Вперед</button>
+  </div>
+
+  <!-- Модальное окно викторины -->
+  <div id="quiz-modal" class="quiz-modal hidden">
+    <div class="quiz-content">
+      <!-- Заголовок викторины -->
+      <h2 class="quiz-title">Викторина</h2>
+      <!-- Вопрос викторины -->
+      <p id="quiz-question" class="quiz-question"></p>
+      <!-- Контейнер вариантов ответов -->
+      <div id="quiz-options" class="quiz-options"></div>
+      <!-- Обратная связь после выбора ответа -->
+      <p id="quiz-feedback" class="quiz-feedback"></p>
+      <!-- Контейнер для навигационных кнопок викторины -->
+      <div class="quiz-navs">
+        <button id="quiz-next" class="quiz-nav-btn hidden">Следующий вопрос</button>
+        <button id="quiz-close" class="quiz-nav-btn">Закрыть викторину</button>
+      </div>
     </div>
   </div>
 
-  <audio id="background-music" src="audio/nebo.mp3" loop></audio>
+  <!-- Кнопка запуска викторины -->
+  <button id="start-quiz" class="start-quiz-btn">Начать викторину</button>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+  <!-- Аудиофайлы: основной трек и музыка для викторины -->
+  <audio id="background-music" src="music/your-music.mp3" loop></audio>
+  <audio id="quiz-music" src="audio/quiz-music.mp3" loop></audio>
+
+  <!-- Подключение JavaScript файла -->
   <script src="script.js"></script>
 </body>
 </html>

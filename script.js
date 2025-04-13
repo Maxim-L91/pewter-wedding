@@ -1,132 +1,210 @@
+// ===========================
+// СЛАЙДЕР
+// ===========================
+
+// Массив с данными для слайдов
 const slides = [
   {
     image: 'img/test.jpg',
-    text: 'Первый слайд\nУникальный текст.',
-    imageAnimation: 'floatDown',
-    textColor: '#fff'
+    text: 'Первый слайд\nТайна и красота.',
+    imageAnimation: 'dissolve 1.5s ease forwards',
+    textColor: '#fff',
+    textAnimation: 'typing 5s steps(50, end)'
   },
   {
     image: 'img/test2.jpg',
-    text: 'Второй слайд\nМагия и чудо.',
-    imageAnimation: 'pulse',
-    textColor: '#ff0'
+    text: 'Второй слайд\nДорогие моменты.',
+    imageAnimation: 'dissolve 1.5s ease forwards',
+    textColor: '#ff0',
+    textAnimation: 'typing 5s steps(50, end)'
   },
   {
-    image: 'img/3.jpg',
-    text: 'Третий слайд\nПолет фантазии.',
-    imageAnimation: 'slide-in-left',
-    textColor: '#00f'
+    image: 'img/test3.jpg',
+    text: 'Третий слайд\nПолет в мечту.',
+    imageAnimation: 'zoomIn 1.5s ease forwards',
+    textColor: '#f0f',
+    textAnimation: 'typing 5s steps(50, end)'
   },
   {
-    image: 'img/4.jpg',
-    text: 'Четвертый слайд\nТвоя история.',
-    imageAnimation: 'slide-in-right',
-    textColor: '#f0f'
-  },
-  {
-    image: 'img/5.jpg',
-    text: 'Пятый слайд\nДружба и мечты.',
-    imageAnimation: 'zoom-in',
-    textColor: '#0ff'
-  },
-  {
-    image: 'img/6.jpg',
-    text: 'Шестой слайд\nУлыбка навсегда.',
-    imageAnimation: 'drop-in',
-    textColor: '#f90'
-  },
-  {
-    image: 'img/7.jpg',
-    text: 'Седьмой слайд\nСекреты внутри.',
-    imageAnimation: 'swing-in',
-    textColor: '#0f0'
-  },
-  {
-    image: 'img/8.jpg',
-    text: 'Восьмой слайд\nТы особенная.',
-    imageAnimation: 'rotate-in',
-    textColor: '#ff6600'
-  },
-  {
-    image: 'img/9.jpg',
-    text: 'Девятый слайд\nСвет и тени.',
-    imageAnimation: 'bounce-in',
-    textColor: '#cc00cc'
-  },
-  {
-    image: 'img/10.jpg',
-    text: 'Десятый слайд\nКонец или начало?',
-    imageAnimation: 'zoom-out',
-    textColor: '#33cc33'
+    image: 'img/test4.jpg',
+    text: 'Четвертый слайд\nВдохновение!',
+    imageAnimation: 'zoomIn 1.5s ease forwards',
+    textColor: '#ff6600',
+    textAnimation: 'typing 5s steps(50, end)'
   }
 ];
 
-let currentSlide = 0;
+let currentSlide = 0; // Текущий индекс слайда
+
+// Получаем DOM-элементы для слайдера
 const imageEl = document.getElementById('slide-image');
 const textEl = document.getElementById('slide-text');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
 const soundBtn = document.getElementById('sound');
-const music = document.getElementById('background-music');
+const music = document.getElementById('background-music'); // Основная музыка
+const quizMusic = document.getElementById('quiz-music');     // Музыка для викторины
 
+// Функция для показа слайда
 const showSlide = (index) => {
   const slide = slides[index];
+  // Сброс текущего состояния
   imageEl.style.opacity = 0;
+  imageEl.style.animation = 'none';
   textEl.style.opacity = 0;
   textEl.innerHTML = '';
   textEl.className = 'slide-text';
 
   setTimeout(() => {
     imageEl.src = slide.image;
-    imageEl.style.animation = `${slide.imageAnimation} 1.5s ease forwards`;
-    imageEl.style.opacity = 1;
-
+    // Плавное появление изображения (fade-in)
+    imageEl.style.opacity = 0;
     setTimeout(() => {
-      imageEl.style.opacity = 0.2;
+      imageEl.style.opacity = 1;
+    }, 50);
 
-      typeText(slide.text, slide.textColor);
-
+    // Через 5 секунд запускаем анимацию растворения и отображаем текст
+    setTimeout(() => {
+      imageEl.style.animation = slide.imageAnimation;
+      setTimeout(() => {
+        imageEl.style.opacity = 0.2;
+        typeText(slide.text, slide.textColor, slide.textAnimation);
+      }, 1500);
     }, 5000);
   }, 500);
 };
 
-const typeText = (text, color) => {
-  let index = 0;
+// Функция для анимации печати текста
+const typeText = (text, color, animation) => {
   textEl.style.color = color;
-
-  const typeInterval = setInterval(() => {
+  textEl.style.animation = animation;
+  let index = 0;
+  const interval = setInterval(() => {
     textEl.textContent += text[index];
     textEl.style.opacity = 1;
     index++;
     if (index >= text.length) {
-      clearInterval(typeInterval);
+      clearInterval(interval);
     }
   }, 80);
 };
 
-document.getElementById('prev').addEventListener('click', () => {
+// Обработчики для кнопок навигации слайдера
+prevBtn.addEventListener('click', () => {
   currentSlide = (currentSlide - 1 + slides.length) % slides.length;
   showSlide(currentSlide);
 });
 
-document.getElementById('next').addEventListener('click', () => {
+nextBtn.addEventListener('click', () => {
   currentSlide = (currentSlide + 1) % slides.length;
   showSlide(currentSlide);
 });
 
+// Обработчик для кнопки управления музыкой
 soundBtn.addEventListener('click', () => {
   if (music.paused) {
     music.play();
-    soundBtn.classList.add('playing');
   } else {
     music.pause();
-    soundBtn.classList.remove('playing');
   }
 });
 
+// При загрузке страницы запускаем основную музыку и показываем первый слайд
 window.addEventListener('load', () => {
   setTimeout(() => {
     music.play();
-    soundBtn.classList.add('playing');
   }, 5000);
-
   showSlide(currentSlide);
+});
+
+
+// ===========================
+// ВИКТОРИНА
+// ===========================
+
+// Данные викторины
+const quizData = [
+  {
+    question: "Где мы встретились?",
+    options: ["В кафе", "На вечеринке", "В университете", "В парке"],
+    answer: "В университете"
+  },
+  {
+    question: "Какой наш первый совместный фильм?",
+    options: ["Титаник", "Матрица", "Интерстеллар", "Начало"],
+    answer: "Титаник"
+  },
+  {
+    question: "Какое блюдо мы готовили вместе в первый раз?",
+    options: ["Пицца", "Паста", "Суши", "Борщ"],
+    answer: "Паста"
+  }
+];
+
+let currentQuizIndex = 0; // Текущий индекс вопроса викторины
+
+// Получаем DOM-элементы для викторины
+const quizModal = document.getElementById('quiz-modal');
+const quizQuestionEl = document.getElementById('quiz-question');
+const quizOptionsEl = document.getElementById('quiz-options');
+const quizFeedbackEl = document.getElementById('quiz-feedback');
+const quizNextBtn = document.getElementById('quiz-next');
+const quizCloseBtn = document.getElementById('quiz-close');
+const startQuizBtn = document.getElementById('start-quiz');
+
+// Функция для показа текущего вопроса викторины
+const showQuizQuestion = () => {
+  const data = quizData[currentQuizIndex];
+  quizFeedbackEl.textContent = "";
+  quizNextBtn.classList.add('hidden');
+  quizQuestionEl.textContent = data.question;
+  quizOptionsEl.innerHTML = "";
+
+  // Создаем кнопки для вариантов ответа
+  data.options.forEach(option => {
+    const btn = document.createElement('button');
+    btn.textContent = option;
+    btn.classList.add('quiz-option');
+    btn.addEventListener('click', () => {
+      if (option === data.answer) {
+        quizFeedbackEl.textContent = "Правильно!";
+      } else {
+        quizFeedbackEl.textContent = "Неправильно!";
+      }
+      quizNextBtn.classList.remove('hidden');
+    });
+    quizOptionsEl.appendChild(btn);
+  });
+};
+
+// Обработчик для кнопки "Начать викторину"
+startQuizBtn.addEventListener('click', () => {
+  currentQuizIndex = 0;
+  quizModal.classList.remove('hidden');
+  // Переключаем музыку: останавливаем основную и запускаем музыку викторины
+  music.pause();
+  music.currentTime = 0;
+  quizMusic.currentTime = 0;
+  quizMusic.play();
+  showQuizQuestion();
+});
+
+// Обработчик для кнопки "Следующий вопрос"
+quizNextBtn.addEventListener('click', () => {
+  currentQuizIndex++;
+  if (currentQuizIndex < quizData.length) {
+    showQuizQuestion();
+  } else {
+    quizFeedbackEl.textContent = "Поздравляем! Вы завершили викторину!";
+    quizNextBtn.classList.add('hidden');
+  }
+});
+
+// Обработчик для кнопки "Закрыть викторину"
+quizCloseBtn.addEventListener('click', () => {
+  quizModal.classList.add('hidden');
+  // Возвращаем основную музыку
+  quizMusic.pause();
+  quizMusic.currentTime = 0;
+  music.play();
 });
