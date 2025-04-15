@@ -1,45 +1,48 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>10 лет вместе 💖</title>
-  <link rel="stylesheet" href="style.css"/>
-</head>
-<body>
-  <div class="slider-container">
-    <div class="slider">
-      <img id="slide-image" src="img/test1.jpg" alt="Слайд 1"/>
-      <div id="slide-text" class="slide-text"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>10 лет вместе 💖</title>
+    <!-- Если хочешь импортировать стили через JS, то можно убрать этот <link> -->
+    <!-- Но можно оставить для быстрой загрузки базовых стилей -->
+  </head>
+  <body>
+    <!-- Переносим основную разметку из твоего src/index.html -->
+    <div class="slider-container">
+      <div class="slider">
+        <img id="slide-image" src="/img/test1.jpg" alt="Слайд 1"/>
+        <div id="slide-text" class="slide-text"></div>
+      </div>
+
+      <div class="controls">
+        <button id="prev-btn">⟵</button>
+        <button id="next-btn">⟶</button>
+        <button id="music-btn">🔈</button>
+      </div>
+
+      <div class="scroll-to-quiz">
+        <button id="quiz-scroll-btn">🐾 Перейти к викторине</button>
+      </div>
     </div>
 
-    <div class="controls">
-      <button id="prev-btn">⟵</button>
-      <button id="next-btn">⟶</button>
-      <button id="music-btn">🔈</button>
+    <section id="quiz-section">
+      <div class="cat-container">
+        <img id="cat-image" src="/images/cat-hungry.gif" alt="Голодный котик"/>
+        <div id="food-points">Корм: 0</div>
+        <button id="start-quiz">Начать викторину</button>
+      </div>
+    </section>
+
+    <div id="quiz-modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="quiz-container"></div>
+      </div>
     </div>
 
-    <div class="scroll-to-quiz">
-      <button id="quiz-scroll-btn">🐾 Перейти к викторине</button>
-    </div>
-  </div>
-
-  <section id="quiz-section">
-    <div class="cat-container">
-      <img id="cat-image" src="images/cat-hungry.gif" alt="Голодный котик"/>
-      <div id="food-points">Корм: 0</div>
-      <button id="start-quiz">Начать викторину</button>
-    </div>
-  </section>
-
-  <div id="quiz-modal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <div id="quiz-container"></div>
-    </div>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
-  <script src="script.js"></script>
-</body>
+    <!-- Подключаем Howler через CDN или импортируем его в модулях -->
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>
