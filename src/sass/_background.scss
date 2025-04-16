@@ -1,0 +1,146 @@
+/* _background.scss */
+
+/* Контейнер для частиц, занимающий весь экран */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* чтобы клики проходили сквозь */
+  z-index: 1; /* или 0, главное — выше фона, но ниже контента */
+}
+
+/* Стиль для отдельной частицы */
+.particle {
+  position: absolute;
+  background: rgba(216, 62, 139, 0.3);
+  border-radius: 50%;
+  animation: particleAnimation linear infinite;
+}
+
+.particle {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  animation: float-up 2s ease-out forwards;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+}
+
+.particle {
+  position: absolute;
+  z-index: 9999;
+  animation: float-up 2s ease-out forwards;
+  pointer-events: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.particle--circle {
+  border-radius: 50%;
+}
+
+.particle--square {
+  border-radius: 0;
+}
+
+.particle--heart {
+  clip-path: path('M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 C2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09 C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5 c0 3.78-3.4 6.86-8.55 11.54L12 21.35z');
+  background-color: pink;
+}
+
+.particle--star {
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  background-color: gold;
+}
+
+@keyframes float-up {
+  to {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.particle {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 1;
+  animation: fall 2s ease-out forwards;
+  transform: translateY(0) scale(1);
+  will-change: transform, opacity;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(150px) scale(0.7) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes fall1 {
+  100% {
+    transform: translateY(150px) rotate(360deg);
+    opacity: 0;
+  }
+}
+@keyframes fall2 {
+  100% {
+    transform: translateY(200px) rotate(-180deg) scale(0.5);
+    opacity: 0;
+  }
+}
+@keyframes fall3 {
+  100% {
+    transform: translate(30px, 180px) rotate(720deg) scale(0.8);
+    opacity: 0;
+  }
+}
+
+
+/* Анимация */
+@keyframes float-up {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) scale(0.5) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+
+/* Ключевые кадры для анимации частиц */
+@keyframes particleAnimation {
+  0% {
+    transform: translateY(0) scale(0.5);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(100vh) scale(1);
+    opacity: 0;
+  }
+}

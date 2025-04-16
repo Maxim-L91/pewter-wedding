@@ -10,18 +10,24 @@
   </head>
   <body>
     <!-- Переносим основную разметку из твоего src/index.html -->
+    <div class="particles"></div>
+    
     <div class="slider-container">
       <div class="slider">
-        <img id="slide-image" src="/img/test1.jpg" alt="Слайд 1"/>
-        <div id="slide-text" class="slide-text"></div>
+        <div class="image-wrapper">
+          <img id="slide-image" src="/img/test1.jpg" alt="Слайд 1" />
+        </div>
+        <div class="slide-text-wrapper">
+          <div id="slide-text" class="slide-text"></div>
+        </div>
       </div>
-
+    
       <div class="controls">
         <button id="prev-btn">⟵</button>
-        <button id="next-btn">⟶</button>
         <button id="music-btn">🔈</button>
+        <button id="next-btn">⟶</button>
       </div>
-
+    
       <div class="scroll-to-quiz">
         <button id="quiz-scroll-btn">🐾 Перейти к викторине</button>
       </div>
@@ -43,6 +49,6 @@
     </div>
 
     <!-- Подключаем Howler через CDN или импортируем его в модулях -->
-    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/js/main.js"></script>
   </body>
 </html>

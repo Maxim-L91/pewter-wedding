@@ -1,0 +1,143 @@
+/* _slider.scss */
+
+/* Контейнер слайдера с нежным переливом */
+.slider-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 40px;
+  position: relative;
+  background: linear-gradient(135deg, #ffe6f0, #ffccf9);
+}
+
+/* Слайдер */
+.slider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+/* Рамка изображения с фиксированной высотой и градиентной рамкой */
+.image-wrapper {
+  width: 90%;
+  max-width: 600px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(255, 105, 180, 0.3);
+  background: linear-gradient(135deg, #ffe6f0, #ffccf9);
+  position: relative;
+}
+
+/* Изображение */
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  transition: filter 0.5s ease;
+}
+
+/* Текст слайдера */
+.slide-text-wrapper {
+  width: 90%;
+  max-width: 600px;
+  min-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 20px;
+  overflow: hidden;
+}
+
+.slide-text {
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  font-size: 1.2rem;
+  color: #333;
+  width: 100%;
+  white-space: pre-wrap;
+  line-height: 1.5;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.8s ease, height 0.4s ease;
+}
+
+/* Анимации для смены изображений */
+
+/* Эффекты размытия при смене */
+@keyframes blurOut {
+  from { filter: blur(0); opacity: 1; }
+  to { filter: blur(8px); opacity: 0; }
+}
+@keyframes blurIn {
+  from { filter: blur(8px); opacity: 0; }
+  to { filter: blur(0); opacity: 1; }
+}
+
+/* 10 разных анимаций для входа изображения */
+@keyframes flyIn {
+  from { transform: translateY(-200px) scale(0.8); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes rotateIn {
+  from { transform: rotate(-90deg); opacity: 0; }
+  to { transform: rotate(0deg); opacity: 1; }
+}
+@keyframes zoomIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@keyframes fadeSlide {
+  from { transform: translateX(-100px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes flipIn {
+  from { transform: rotateY(180deg); opacity: 0; }
+  to { transform: rotateY(0deg); opacity: 1; }
+}
+@keyframes swirlIn {
+  from { transform: rotate(720deg) scale(0); opacity: 0; }
+  to { transform: rotate(0deg) scale(1); opacity: 1; }
+}
+@keyframes bounceIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes dropIn {
+  from { transform: translateY(-300px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes slideInR {
+  from { transform: translateX(100px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes popIn {
+  0% { transform: scale(0); opacity: 0; }
+  80% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Анимация для текста (плавное появление) */
+@keyframes textFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.controls {
+  margin-top: 20px;
+}
+
+.scroll-to-quiz {
+  margin-top: 30px;
+}

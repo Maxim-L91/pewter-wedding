@@ -1,0 +1,61 @@
+// _quiz.scss
+
+#quiz-section {
+  padding: 50px 20px;
+  background-color: #ffebf1;
+  text-align: center;
+}
+
+.cat-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#cat-image {
+  max-width: 200px;
+  margin-bottom: 20px;
+  animation: fadeIn 2s ease;
+}
+
+#food-points {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff0f5;
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+}
+
+.close {
+  font-size: 2rem;
+  color: #ff1493;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+}
+
+input[type="text"] {
+  padding: 10px;
+  width: 80%;
+  margin: 10px 0;
+  border: 2px solid #ffb6c1;
+  border-radius: 8px;
+}
