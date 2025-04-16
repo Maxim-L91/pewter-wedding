@@ -20,22 +20,39 @@ let currentSlide = 0;
 const slideImage = document.getElementById('slide-image');
 const slideText = document.getElementById('slide-text');
 
-// Обновление текста с отложенным появлением через 2 секунды
+// Плавная "печатная" анимация текста
+function typeText(element, text, speed = 50) {
+  element.textContent = '';
+  let index = 0;
+
+  const interval = setInterval(() => {
+    element.textContent += text[index];
+    index++;
+    if (index === text.length) {
+      clearInterval(interval);
+    }
+  }, speed);
+}
+
+// Обновление текста: скрытие → задержка → печатание
 export function updateSlideText(newText) {
   slideText.style.opacity = 0;
+  slideText.style.animation = 'none';
+  slideText.textContent = ''; // очистка перед "печатанием"
+
   setTimeout(() => {
-    slideText.innerText = newText;
-    slideText.style.animation = "textFadeIn 0.8s ease forwards";
+    slideText.style.opacity = 1;
+    typeText(slideText, newText, 40);
   }, 2000);
 }
 
-// Функция смены слайда с эффектами blur и выбором анимации
+// Показ слайда с эффектами
 export function showSlide(index) {
-  // Применяем эффект ухода (blurOut)
+  // Уходящее изображение
   slideImage.style.animation = "blurOut 0.5s ease forwards";
-  
+
   setTimeout(() => {
-    // Обновляем изображение
+    // Обновление изображения
     slideImage.src = images[index];
     const animations = [
       "flyIn 1.2s ease-out",
@@ -52,9 +69,11 @@ export function showSlide(index) {
     slideImage.style.animation = `${animations[index]} forwards, blurIn 0.5s ease forwards`;
   }, 500);
 
+  // Обновление текста с задержкой
   updateSlideText(texts[index]);
 }
 
+// Настройка кнопок
 export function setupSlider(prevBtn, nextBtn) {
   prevBtn.onclick = () => {
     currentSlide = (currentSlide - 1 + images.length) % images.length;

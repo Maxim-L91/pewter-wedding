@@ -1,47 +1,69 @@
-export const quizQuestions = [
-  { q: "Как звали нашу первую кошку?", a: "Мурка" },
-  { q: "Где мы провели отпуск 2019?", a: "Сочи" },
-  { q: "Любимый фильм?", a: "Амели" },
-  { q: "Когда мы впервые поехали за границу?", a: "2017" },
-  { q: "Любимая еда?", a: "Суши" },
-  { q: "Какой цвет ты чаще носишь?", a: "Розовый" },
-  { q: "Куда мы поехали на годовщину 5 лет?", a: "Питер" },
-  { q: "Как зовут твою подругу?", a: "Аня" },
-  { q: "Любимая песня?", a: "Shallow" },
-  { q: "Сколько лет мы вместе?", a: "10" }
+// quiz.js
+
+let score = 0;
+let catState = 0;
+
+const maxCatState = 4;
+const foodPointsEl = document.getElementById('food-points');
+const catImage = document.getElementById('cat-image');
+
+const catImages = [
+  '/images/cat-hungry.gif',
+  '/images/cat-smile.gif',
+  '/images/cat-happy.gif',
+  '/images/cat-full.gif',
+  '/images/cat-sleep.gif',
 ];
 
-export function startQuiz(startBtn, modal, foodDisplay, catImage, quizContainer) {
-  startBtn.onclick = () => {
-    modal.style.display = 'flex';
-    let foodPoints = 0;
-    foodDisplay.textContent = `Корм: ${foodPoints}`;
-    catImage.src = '/images/cat-hungry.gif';
-    quizContainer.innerHTML = '';
-
-    quizQuestions.forEach((item, idx) => {
-      const div = document.createElement('div');
-      div.innerHTML = `
-        <p>${idx + 1}. ${item.q}</p>
-        <input type="text" id="answer-${idx}" placeholder="Ваш ответ" />
-      `;
-      quizContainer.appendChild(div);
-    });
-
-    const submit = document.createElement('button');
-    submit.textContent = "Отправить ответы";
-    submit.onclick = () => {
-      foodPoints = 0;
-      quizQuestions.forEach((item, idx) => {
-        const answer = document.getElementById(`answer-${idx}`).value.trim().toLowerCase();
-        if (answer === item.a.toLowerCase()) foodPoints += 10;
-      });
-      foodDisplay.textContent = `Корм: ${foodPoints}`;
-      catImage.src = foodPoints >= 80 ? '/images/cat-happy.gif' :
-                     foodPoints >= 40 ? '/images/cat-medium.gif' :
-                                        '/images/cat-hungry.gif';
-      modal.style.display = 'none';
-    };
-    quizContainer.appendChild(submit);
-  };
+function updateFoodPoints() {
+  foodPointsEl.textContent = `Корм: ${score}`;
 }
+
+function feedCat() {
+  if (score > 0 && catState < maxCatState) {
+    score -= 1;
+    catState += 1;
+    catImage.src = catImages[catState];
+    updateFoodPoints();
+  }
+}
+
+function addPoint() {
+  score += 1;
+  updateFoodPoints();
+}
+
+export function initQuiz() {
+  const startBtn = document.getElementById('start-quiz');
+  startBtn.addEventListener('click', () => {
+    // Пока просто начислим балл и попробуем покормить
+    addPoint();
+    setTimeout(feedCat, 1000);
+  });
+}
+
+export function showQuizModal() {
+  const modal = document.getElementById('quizModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex'); // чтобы flex заработал
+  }
+}
+
+export function hideQuizModal() {
+  const modal = document.getElementById('quizModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+document.getElementById("startQuizBtn").addEventListener("click", () => {
+  document.getElementById("quizModal").style.display = "flex";
+  document.body.style.overflow = "hidden"; // блокируем прокрутку
+});
+
+document.getElementById("closeQuizModal").addEventListener("click", () => {
+  document.getElementById("quizModal").style.display = "none";
+  document.body.style.overflow = ""; // восстанавливаем прокрутку
+});

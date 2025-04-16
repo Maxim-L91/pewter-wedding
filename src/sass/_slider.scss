@@ -2,6 +2,7 @@
 
 /* Контейнер слайдера с нежным переливом */
 .slider-container {
+  position: relative;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -68,9 +69,85 @@
   white-space: pre-wrap;
   line-height: 1.5;
   overflow: hidden;
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.8s ease, height 0.4s ease;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s ease, height 0.4s ease;
+  pointer-events: auto;
 }
+
+.slider-text--hidden {
+  opacity: 0;
+  transform: translateY(20px); // Съезжает вниз при исчезновении
+  pointer-events: none;
+}
+
+#slide-text {
+  font-size: 1.4rem;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  white-space: pre-wrap;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;  /* Выравнивание кнопок по центру */
+  gap: 1rem;
+  margin-top: 1rem;
+
+  button {
+    background: rgba(255, 192, 203, 0.6); // полупрозрачный розовый
+    border: none;
+    padding: 1rem 1.2rem;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, background 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+      background: rgba(252, 152, 169, 0.8);
+    }
+
+    &.playing {
+      animation: pulse 2s infinite;
+    }
+  }
+}
+
+button.playing {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Кнопка викторины внизу экрана */
+.quiz-button-container {
+  text-align: center;  /* Центрируем кнопку по горизонтали */
+  margin-top: 2rem;  /* Отступ сверху, чтобы кнопка была ниже слайдера */
+}
+
+#quiz-btn {
+  background: rgba(255, 107, 107, 0.7); /* Розовая кнопка */
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, background 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+    background: rgba(255, 107, 107, 0.9);
+  }
+}
+
 
 /* Анимации для смены изображений */
 

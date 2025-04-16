@@ -76,3 +76,24 @@ button:hover {
     width: 100%;
   }
 }
+
+/* Адаптив */
+@media (max-width: 480px) {
+  .quiz-content {
+    padding: 1.5rem;
+    width: 95%;
+  }
+
+  .quiz-title {
+    font-size: 1.2rem;
+  }
+
+  .quiz-question-text {
+    font-size: 1rem;
+  }
+
+  .quiz-option {
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
+}

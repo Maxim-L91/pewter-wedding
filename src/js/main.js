@@ -4,8 +4,21 @@ import '../sass/main.scss'; // Импорт главного SCSS-файла
 // Если твои стили лежат в папке sass, а не styles, используй соответствующий путь.
 
 import { setupSlider, showSlide } from './modules/slider.js';
-import { toggleMusic } from './modules/music.js';
+import { initMusic } from './modules/music.js';
+import { initQuiz } from './modules/quiz.js';
 // Импорт других модулей, если они есть (quiz.js, ui.js)
+
+// Музыка
+document.addEventListener('DOMContentLoaded', () => {
+  const musicBtn = document.getElementById('music-btn');
+  if (musicBtn) {
+    initMusic(musicBtn);
+  }
+});
+
+document.getElementById('startQuizBtn').addEventListener('click', () => {
+  showQuizModal();
+});
 
 function createParticle(x, y) {
   const particle = document.createElement('div');
@@ -69,6 +82,18 @@ document.addEventListener('touchstart', (e) => {
   spawnParticles(touch.clientX, touch.clientY);
 });
 
+// Обработчик для кнопки
+document.addEventListener('DOMContentLoaded', () => {
+  const quizScrollBtn = document.getElementById('quiz-btn');
+  const quizSection = document.getElementById('quiz-section');
+
+  if (quizScrollBtn && quizSection) {
+    quizScrollBtn.addEventListener('click', () => {
+      quizSection.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+});
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const prevBtn = document.getElementById('prev-btn');
@@ -77,7 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Дополнительные элементы, если нужны: quiz, ui и т.д.
 
   setupSlider(prevBtn, nextBtn);
-  toggleMusic(musicBtn);
+  // initMusic(musicBtn);
   showSlide(0);
   createParticle(50, 50);
+  initQuiz();
 });

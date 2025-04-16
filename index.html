@@ -28,8 +28,9 @@
         <button id="next-btn">⟶</button>
       </div>
     
-      <div class="scroll-to-quiz">
-        <button id="quiz-scroll-btn">🐾 Перейти к викторине</button>
+      <!-- Кнопка викторины внизу экрана -->
+      <div class="quiz-button-container">
+        <button id="quiz-btn">Начать викторину</button>
       </div>
     </div>
 
@@ -37,7 +38,22 @@
       <div class="cat-container">
         <img id="cat-image" src="/images/cat-hungry.gif" alt="Голодный котик"/>
         <div id="food-points">Корм: 0</div>
-        <button id="start-quiz">Начать викторину</button>
+        <button id="startQuizBtn">Начать викторину</button>
+      </div>
+
+      <!-- Модальное окно -->
+      <div id="quizModal" class="quiz-modal-overlay">
+        <div class="quiz-modal">
+          <button id="closeQuizModal" class="quiz-close">&times;</button>
+          <h2 class="quiz-title">Привет, любовь 💖</h2>
+          <div class="quiz-question">Первый вопрос: Что ты больше всего любишь делать?</div>
+          <div class="quiz-options">
+            <button class="quiz-option">Смотреть сериальчики 🍿</button>
+            <button class="quiz-option">Лежать в кроватке 😴</button>
+            <button class="quiz-option">Обниматься 🥰</button>
+            <button class="quiz-option">Есть вкусняшки 🍰</button>
+          </div>
+        </div>
       </div>
     </section>
 
