@@ -1,30 +1,62 @@
 // js/main.js
 
-import '../sass/main.scss'; // Импорт главного SCSS-файла
-// Если твои стили лежат в папке sass, а не styles, используй соответствующий путь.
+import '../sass/main.scss';
 
 import { setupSlider, showSlide } from './modules/slider.js';
 import { initMusic } from './modules/music.js';
-import { initQuiz } from './modules/quiz.js';
-// Импорт других модулей, если они есть (quiz.js, ui.js)
+import { initQuiz, startQuiz } from './modules/quiz.js';
 
-// Музыка
+// === DOMContentLoaded ===
 document.addEventListener('DOMContentLoaded', () => {
+  // Музыка
   const musicBtn = document.getElementById('music-btn');
-  if (musicBtn) {
-    initMusic(musicBtn);
+  if (musicBtn) initMusic(musicBtn);
+
+  // Кнопка запуска викторины
+  const startQuizBtn = document.getElementById('startQuizBtn');
+  if (startQuizBtn) {
+    startQuizBtn.addEventListener('click', () => {
+      showQuizModal();
+      startQuiz();
+    });
   }
+
+  // Кнопка плавного скролла к викторине
+  const quizScrollBtn = document.getElementById('quiz-btn');
+  const quizSection = document.getElementById('quiz-section');
+  if (quizScrollBtn && quizSection) {
+    quizScrollBtn.addEventListener('click', () => {
+      // Скроллинг до секции
+      quizSection.scrollIntoView({ behavior: 'smooth' });
+
+      // Через небольшую задержку открываем модалку и запускаем викторину
+      setTimeout(() => {
+        document.getElementById("quizModal").style.display = "flex"; // Показываем модалку
+        document.body.style.overflow = "hidden"; // Блокируем прокрутку
+        startQuiz(); // Запускаем викторину
+      }, 800); // Задержка, чтобы дать время для прокрутки
+    });
+  }
+
+
+  // Слайдер
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  setupSlider(prevBtn, nextBtn);
+  showSlide(0);
+
+  // Инициализация викторины
+  initQuiz();
+
+  // Частицы при загрузке
+  createParticle(50, 50);
 });
 
-document.getElementById('startQuizBtn').addEventListener('click', () => {
-  showQuizModal();
-});
-
+// === Частицы ===
 function createParticle(x, y) {
   const particle = document.createElement('div');
   particle.classList.add('particle');
 
-  // Тип частицы: div или emoji
   const useEmoji = Math.random() < 0.5;
 
   if (useEmoji) {
@@ -47,19 +79,16 @@ function createParticle(x, y) {
       'rgba(0,210,211,0.9)'
     ];
     particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
     const size = Math.random() * 10 + 10;
     particle.style.width = `${size}px`;
     particle.style.height = `${size}px`;
   }
 
-  // Позиция
   particle.style.left = `${x}px`;
   particle.style.top = `${y}px`;
 
-  // Добавляем в документ
   document.body.appendChild(particle);
-
-  // Удаление через 2 секунды
   setTimeout(() => particle.remove(), 2000);
 }
 
@@ -73,37 +102,12 @@ function spawnParticles(x, y) {
   }
 }
 
+// Частицы при клике и касании
 document.addEventListener('click', (e) => {
   spawnParticles(e.clientX, e.clientY);
 });
 
 document.addEventListener('touchstart', (e) => {
   const touch = e.touches[0];
-  spawnParticles(touch.clientX, touch.clientY);
-});
-
-// Обработчик для кнопки
-document.addEventListener('DOMContentLoaded', () => {
-  const quizScrollBtn = document.getElementById('quiz-btn');
-  const quizSection = document.getElementById('quiz-section');
-
-  if (quizScrollBtn && quizSection) {
-    quizScrollBtn.addEventListener('click', () => {
-      quizSection.scrollIntoView({ behavior: 'smooth' });
-    });
-  }
-});
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  const prevBtn = document.getElementById('prev-btn');
-  const nextBtn = document.getElementById('next-btn');
-  const musicBtn = document.getElementById('music-btn');
-  // Дополнительные элементы, если нужны: quiz, ui и т.д.
-
-  setupSlider(prevBtn, nextBtn);
-  // initMusic(musicBtn);
-  showSlide(0);
-  createParticle(50, 50);
-  initQuiz();
+  if (touch) spawnParticles(touch.clientX, touch.clientY);
 });

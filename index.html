@@ -5,11 +5,10 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>10 лет вместе 💖</title>
-    <!-- Если хочешь импортировать стили через JS, то можно убрать этот <link> -->
-    <!-- Но можно оставить для быстрой загрузки базовых стилей -->
+    <!-- Подключите скомпилированный CSS (например, main.css) -->
+    <link rel="stylesheet" href="/src/styles/main.css" />
   </head>
   <body>
-    <!-- Переносим основную разметку из твоего src/index.html -->
     <div class="particles"></div>
     
     <div class="slider-container">
@@ -24,11 +23,11 @@
     
       <div class="controls">
         <button id="prev-btn">⟵</button>
-        <button id="music-btn">🔈</button>
+        <button id="music-btn">Нажми на меня</button>
         <button id="next-btn">⟶</button>
       </div>
     
-      <!-- Кнопка викторины внизу экрана -->
+      <!-- Кнопка для скролла и запуска викторины -->
       <div class="quiz-button-container">
         <button id="quiz-btn">Начать викторину</button>
       </div>
@@ -36,12 +35,20 @@
 
     <section id="quiz-section">
       <div class="cat-container">
-        <img id="cat-image" src="/images/cat-hungry.gif" alt="Голодный котик"/>
-        <div id="food-points">Корм: 0</div>
-        <button id="startQuizBtn">Начать викторину</button>
+        <!-- Котик с изображением и фразой -->
+        <div id="cat-container">
+          <img id="cat-img" src="public/img/cat/cat1.png" alt="Голодный котик" />
+          <div id="cat-phrase">Я так голоден…</div>
+        </div>
+        <div id="quizStatus">
+          <!-- Прогресс по очкам, отображается корм для котика -->
+          <div id="foodScore">0 🐟</div>
+        </div>
+        <!-- Кнопка запуска викторины -->
+        <button id="startQuizBtn" class="quiz-start-btn">Начать викторину</button>
       </div>
 
-      <!-- Модальное окно -->
+      <!-- Модальное окно викторины -->
       <div id="quizModal" class="quiz-modal-overlay">
         <div class="quiz-modal">
           <button id="closeQuizModal" class="quiz-close">&times;</button>
@@ -57,14 +64,7 @@
       </div>
     </section>
 
-    <div id="quiz-modal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <div id="quiz-container"></div>
-      </div>
-    </div>
-
-    <!-- Подключаем Howler через CDN или импортируем его в модулях -->
+    <!-- Подключение скриптов -->
     <script type="module" src="/src/js/main.js"></script>
   </body>
 </html>
