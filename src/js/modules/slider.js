@@ -74,6 +74,8 @@ export function showSlide(index) {
   setTimeout(() => {
     // Обновление изображения
     slideImage.src = images[index];
+
+    // Выбор анимации по кругу (10 анимаций на 30 слайдов)
     const animations = [
       "flyIn 1.2s ease-out",
       "rotateIn 1.2s ease-out",
@@ -86,12 +88,21 @@ export function showSlide(index) {
       "slideInR 1.2s ease-out",
       "popIn 1.2s ease-out"
     ];
-    slideImage.style.animation = `${animations[index]} forwards, blurIn 0.5s ease forwards`;
+
+    const animation = animations[index % animations.length]; // ← вот это добавлено
+
+    slideImage.style.animation = `${animation} forwards, blurIn 0.5s ease forwards`;
+    // --- Добавлено: пульсация изображения на 5 секунд ---
+    slideImage.classList.add('pulse');
+    setTimeout(() => {
+      slideImage.classList.remove('pulse');
+    }, 5000);
   }, 500);
 
   // Обновление текста с задержкой
   updateSlideText(texts[index]);
 }
+
 
 // Настройка кнопок
 export function setupSlider(prevBtn, nextBtn) {
